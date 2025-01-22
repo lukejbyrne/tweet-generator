@@ -3,7 +3,8 @@ from huggingface_hub import InferenceClient
 import os
 
 app = Flask(__name__)
-client = InferenceClient(api_key="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")
+HUGGING_FACE_API_KEY=os.getenv("HUGGING_FACE_API_KEY")
+client = InferenceClient(api_key=HUGGING_FACE_API_KEY)
 
 @app.route('/')
 def home():
