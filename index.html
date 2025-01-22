@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tweet Generator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <style>
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        .gradient-bg {
+            background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+            background-size: 400% 400%;
+            animation: gradient 15s ease infinite;
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl shadow-2xl w-full max-w-xl p-6 space-y-6">
+        <div class="text-center">
+            <h1 class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500">
+                Tweet Generator
+            </h1>
+            <p class="text-gray-600 mt-2">Transform your ideas into engaging tweets</p>
+        </div>
+
+        <div class="space-y-4">
+            <textarea 
+                id="input-text" 
+                rows="4" 
+                class="w-full p-4 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none transition-all"
+                placeholder="Enter your topic or idea..."
+            ></textarea>
+
+            <div class="flex flex-wrap gap-2 justify-center">
+                <button onclick="generateTweet('professional')" class="px-6 py-2 bg-blue-500 text-white rounded-full hover:bg-blue-600 transition-colors">
+                    💼 Professional
+                </button>
+                <button onclick="generateTweet('casual')" class="px-6 py-2 bg-green-500 text-white rounded-full hover:bg-green-600 transition-colors">
+                    😊 Casual
+                </button>
+                <button onclick="generateTweet('funny')" class="px-6 py-2 bg-purple-500 text-white rounded-full hover:bg-purple-600 transition-colors">
+                    😄 Funny
+                </button>
+            </div>
+
+            <div id="output" class="min-h-[100px] p-4 bg-gray-50 rounded-lg border border-gray-200 whitespace-pre-wrap"></div>
+
+            <button 
+                id="copy-button" 
+                onclick="copyToClipboard()" 
+                class="w-full py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-900 transition-colors flex items-center justify-center gap-2"
+            >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                </svg>
+                Copy to Clipboard
+            </button>
+        </div>
+    </div>
+
+    <script>
+        function generateTweet(tone) {
+            const inputText = document.getElementById('input-text').value;
+            const outputDiv = document.getElementById('output');
+            
+            if (!inputText.trim()) {
+                outputDiv.textContent = 'Please enter a topic or idea!';
+                return;
+            }
+
+            outputDiv.textContent = 'Generating...';
+            outputDiv.classList.add('animate-pulse');
+
+            fetch('/generate', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ text: inputText, tone: tone })
+            })
+            .then(response => response.json())
+            .then(data => {
+                outputDiv.classList.remove('animate-pulse');
+                outputDiv.textContent = data.generated_text;
+            })
+            .catch(error => {
+                outputDiv.classList.remove('animate-pulse');
+                outputDiv.textContent = 'An error occurred while generating the tweet.';
+                console.error('Error:', error);
+            });
+        }
+
+        function copyToClipboard() {
+            const outputText = document.getElementById('output').textContent;
+            if (!outputText || outputText === 'Generating...') return;
+            
+            navigator.clipboard.writeText(outputText)
+                .then(() => {
+                    const copyButton = document.getElementById('copy-button');
+                    copyButton.textContent = 'Copied!';
+                    setTimeout(() => {
+                        copyButton.innerHTML = `<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"/>
+                        </svg>Copy to Clipboard`;
+                    }, 2000);
+                });
+        }
+    </script>
+</body>
+</html>
