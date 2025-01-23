@@ -1,4 +1,4 @@
-# Tweet Generator
+# Tweet Generator v2
 
 A web application that generates engaging tweets based on user-provided ideas and tone preferences.
 
