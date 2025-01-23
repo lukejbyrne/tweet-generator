@@ -1,6 +1,8 @@
-# Tweet Generator v2
+# Tweet Generator
 
-A web application that generates engaging tweets based on user-provided ideas and tone preferences.
+A web application that generates engaging tweets based on user input and tone preferences.
+
+Made by Luke Byrne on codecmd.
 
 ## Table of Contents
 
@@ -12,7 +14,7 @@ A web application that generates engaging tweets based on user-provided ideas an
 
 ## Requirements
 
-- Python 3.6 or higher
+- Python 3.x
 - Flask
 - Hugging Face Hub
 
@@ -40,49 +42,61 @@ pip install -r requirements.txt
 
 4. Set up environment variables:
 
-- Create a `.env` file in the project root directory and add the following content:
+- Create a `.env` file in the project root directory.
+- Add your Hugging Face API key to the `.env` file:
 
 ```
 HUGGING_FACE_API_KEY=your_hugging_face_api_key
-PORT=5000  # Optional, default is 5000
 ```
 
-Replace `your_hugging_face_api_key` with your actual Hugging Face API key.
+## Usage
 
-5. Run the application:
+1. Run the Flask application:
 
 ```bash
 python app.py
 ```
 
-The application will start running on `http://localhost:5000` (or the specified port).
+2. Open your browser and navigate to `http://localhost:5000`.
 
-## Usage
+3. Enter your topic or idea in the input field.
 
-Open your web browser and navigate to `http://localhost:5000`. You will see a simple interface where you can enter a topic or idea, select a tone preference, and generate a tweet.
+4. Select a tone preference (Professional, Casual, or Funny).
 
-The generated tweet will be displayed below the input fields. You can also copy the tweet to your clipboard by clicking the "Copy to Clipboard" button.
+5. Click on the corresponding button to generate a tweet.
+
+6. Copy the generated tweet to the clipboard by clicking on the "Copy to Clipboard" button.
 
 ## API Reference
 
-The application provides a RESTful API for generating tweets. You can use the following endpoints:
+### POST /generate
 
-- `POST /generate`: Generate a tweet based on the provided text and tone preference.
+Generates a tweet based on the provided text and tone preference.
 
-  Request body:
-  ```json
-  {
-    "text": "Your topic or idea",
-    "tone": "professional"  // Optional, can be "professional", "casual", or "funny"
-  }
-  ```
+#### Request Body
 
-  Response:
-  ```json
-  {
-    "generated_text": "Generated tweet text"
-  }
-  ```
+```json
+{
+  "text": "Your topic or idea",
+  "tone": "professional"  // Optional: "professional", "casual", or "funny" (default: "professional")
+}
+```
+
+#### Response
+
+```json
+{
+  "generated_text": "Generated tweet text"
+}
+```
+
+#### Error Response
+
+```json
+{
+  "error": "Error message"
+}
+```
 
 ## License
 
