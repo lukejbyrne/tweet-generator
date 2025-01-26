@@ -17,7 +17,7 @@ def generate_tweet():
         text = data.get('text', '')
         tone = data.get('tone', 'professional')
 
-        messages = [{
+        messages = [{ 
             "role": "user",
             "content": f"Generate a {tone} tweet about: {text}"
         }]
