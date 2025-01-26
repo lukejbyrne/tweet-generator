@@ -41,7 +41,6 @@ resource "azurerm_app_service_source_control" "sourcecontrol" {
   app_id             = azurerm_linux_web_app.tweet_generator.id
   repo_url           = "https://github.com/lukejbyrne/tweet-generator"
   branch             = "main"
-  use_manual_integration = true
   use_mercurial      = false
 }
 
