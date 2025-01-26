@@ -28,7 +28,7 @@ resource "azurerm_linux_web_app" "tweet_generator" {
       python_version = "3.9"
     }
     always_on = true # change to false if using F1
-    app_command_line = "gunicorn -w 4 -b 0.0.0.0:$PORT application.app:app"
+    app_command_line = "gunicorn -w 4 -b 0.0.0.0:$PORT app:app"
   }
 
   app_settings = {
