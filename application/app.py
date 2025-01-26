@@ -35,6 +35,6 @@ def generate_tweet():
         return jsonify({"error": str(e)}), 500
 
 if __name__ == '__main__':
-    # port = int(os.getenv("PORT", 5000))  # Default to 5000 if PORT is not set
+    port = int(os.getenv("PORT", 8000))  # Default to 5000 if PORT is not set
     # app.run(host="0.0.0.0", port=port, debug=True)
     app.run(host="0.0.0.0") # Let Gunicorn handle the port
