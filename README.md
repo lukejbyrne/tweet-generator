@@ -1,103 +1,63 @@
-# Tweet Generator
+## Project Structure
 
-A web application that generates engaging tweets based on user input and tone preferences.
-
-Made by Luke Byrne on codecmd.
-
-## Table of Contents
-
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [API Reference](#api-reference)
-- [License](#license)
-
-## Requirements
-
-- Python 3.x
-- Flask
-- Hugging Face Hub
-
-## Installation
-
-1. Clone the repository:
-
-```bash
-git clone https://github.com/your-username/tweet-generator.git
-cd tweet-generator
-```
-
-2. Create a virtual environment (optional but recommended):
-
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-```
-
-3. Install the required packages:
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Set up environment variables:
-
-- Create a `.env` file in the project root directory.
-- Add your Hugging Face API key to the `.env` file:
-
-```
-HUGGING_FACE_API_KEY=your_hugging_face_api_key
-```
+- `requirements.txt`: Contains the list of required Python packages.
+- `__init__.py`: Empty file to make the directory a Python package.
+- `startup.sh`: Shell script to set up the virtual environment, install dependencies, and start the Flask application.
+- `app.py`: Main Flask application file for generating tweets using the Hugging Face API.
+- `local_llm_version/app_llm.py`: Flask application file for generating tweets using a local LLM.
+- `local_llm_version/setup_ollama_model.sh`: Shell script to set up the Ollama model and API server.
+- `templates/index.html`: HTML template for the web application.
 
 ## Usage
 
-1. Run the Flask application:
+The web application provides a user-friendly interface where users can enter their topic or idea, select a tone, and generate a tweet. The generated tweet is displayed on the screen. Users can also copy the tweet to their clipboard.
 
-```bash
-python app.py
-```
+## Installation and Running
 
-2. Open your browser and navigate to `http://localhost:5000`.
+1. Install the required dependencies by running:
+   ```
+   pip install -r requirements.txt
+   ```
 
-3. Enter your topic or idea in the input field.
+2. Set up the Hugging Face API key by creating an environment variable called `HUGGING_FACE_API_KEY` with your API key.
 
-4. Select a tone preference (Professional, Casual, or Funny).
+3. To use the local LLM version, follow these steps:
+   - Install the Ollama model and API server by following the instructions in the `local_llm_version/setup_ollama_model.sh` script.
+   - Set up an environment variable called `OLLAMA_API_URL` with the URL of the Ollama API server (e.g., `http://localhost:11434/api/generate`).
 
-5. Click on the corresponding button to generate a tweet.
+4. Start the Flask application by running:
+   ```
+   python3 app.py
+   ```
+   or
+   ```
+   gunicorn app:app
+   ```
+   (for the local LLM version, use `python3 local_llm_version/app_llm.py` or `gunicorn local_llm_version.app_llm:app`)
 
-6. Copy the generated tweet to the clipboard by clicking on the "Copy to Clipboard" button.
+5. Open your web browser and navigate to `http://localhost:8000` (or the appropriate port if you changed it).
 
-## API Reference
+## Troubleshooting
 
-### POST /generate
+If you encounter any issues, check the following:
 
-Generates a tweet based on the provided text and tone preference.
+- Ensure that you have the required dependencies installed.
+- Verify that the Hugging Face API key is set correctly in the environment variable `HUGGING_FACE_API_KEY`.
+- If using the local LLM version, make sure the Ollama model and API server are set up correctly.
+- Check the Flask application logs for any error messages.
 
-#### Request Body
+## Contributing
 
-```json
-{
-  "text": "Your topic or idea",
-  "tone": "professional"  // Optional: "professional", "casual", or "funny" (default: "professional")
-}
-```
-
-#### Response
-
-```json
-{
-  "generated_text": "Generated tweet text"
-}
-```
-
-#### Error Response
-
-```json
-{
-  "error": "Error message"
-}
-```
+Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+This project is licensed under the MIT License.
+
+## Acknowledgments
+
+This project uses the Hugging Face API and the Ollama model for generating tweets.
+
+## Disclaimer
+
+This project is for educational purposes only and should not be used for commercial purposes without proper licensing and permissions.
