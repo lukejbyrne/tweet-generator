@@ -1,103 +1,56 @@
 # Tweet Generator
 
-A web application that generates engaging tweets based on user input and tone preferences.
-
-Made by Luke Byrne on codecmd.
-
-## Table of Contents
-
-- [Requirements](#requirements)
-- [Installation](#installation)
-- [Usage](#usage)
-- [API Reference](#api-reference)
-- [License](#license)
-
-## Requirements
-
-- Python 3.x
-- Flask
-- Hugging Face Hub
+This web application generates engaging tweets based on user-provided text and tone preferences. It uses the Hugging Face API and a local LLM (Large Language Model) for generating tweets.
 
 ## Installation
 
-1. Clone the repository:
+To set up the project, follow these steps:
 
-```bash
-git clone https://github.com/your-username/tweet-generator.git
-cd tweet-generator
-```
-
-2. Create a virtual environment (optional but recommended):
-
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows, use `venv\Scripts\activate`
-```
-
-3. Install the required packages:
-
-```bash
-pip install -r requirements.txt
-```
-
-4. Set up environment variables:
-
-- Create a `.env` file in the project root directory.
-- Add your Hugging Face API key to the `.env` file:
-
-```
-HUGGING_FACE_API_KEY=your_hugging_face_api_key
-```
+1. Install Python 3.7 or higher.
+2. Create a virtual environment (optional, but recommended):
+   ```
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+3. Install the required dependencies:
+   ```
+   pip install -r requirements.txt
+   ```
 
 ## Usage
 
-1. Run the Flask application:
+1. Set up the local LLM model and API server:
+   - For the Hugging Face API, you don't need to do anything as it's already included in the code.
+   - For the local LLM model, follow the instructions in the `local_llm_version/setup_ollama_model.sh` script. Make sure you have the `ollama` CLI installed (`pip install ollama-cli`).
 
-```bash
-python app.py
-```
+2. Set the following environment variables:
+   - `HUGGING_FACE_API_KEY`: Your Hugging Face API key.
+   - `OLLAMA_API_URL` (optional): The URL of your local LLM API server (default is `http://localhost:11434/api/generate`).
 
-2. Open your browser and navigate to `http://localhost:5000`.
+3. Run the application:
+   ```
+   python3 app.py
+   ```
 
-3. Enter your topic or idea in the input field.
+4. Open your browser and navigate to `http://localhost:8000`.
 
-4. Select a tone preference (Professional, Casual, or Funny).
+## Contributing
 
-5. Click on the corresponding button to generate a tweet.
-
-6. Copy the generated tweet to the clipboard by clicking on the "Copy to Clipboard" button.
-
-## API Reference
-
-### POST /generate
-
-Generates a tweet based on the provided text and tone preference.
-
-#### Request Body
-
-```json
-{
-  "text": "Your topic or idea",
-  "tone": "professional"  // Optional: "professional", "casual", or "funny" (default: "professional")
-}
-```
-
-#### Response
-
-```json
-{
-  "generated_text": "Generated tweet text"
-}
-```
-
-#### Error Response
-
-```json
-{
-  "error": "Error message"
-}
-```
+Contributions are welcome! If you find any bugs or have suggestions for improvements, please open an issue or submit a pull request.
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+This project is licensed under the MIT License.
+
+## Acknowledgments
+
+- The Hugging Face API for generating tweets.
+- The Ollama LLM for generating tweets locally.
+
+## Badges
+
+[![MIT License](https://img.shields.io/badge/license-MIT-blue.svg)](https://opensource.org/licenses/MIT)
+
+---
+
+This README provides a brief overview of the Tweet Generator project. It includes installation instructions, usage details, and information about contributing, licensing, and acknowledgments. The project uses the Hugging Face API and a local LLM for generating tweets, and it's designed to be easy to set up and use for both hobby developers and professionals.
