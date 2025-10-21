@@ -30,8 +30,6 @@ def generate_tweet():
         }
 
         response = requests.post(OLLAMA_API_URL, json=payload)
-        
-        print(f"HERE\n{response.json()}")
 
         # Check for successful response
         if response.status_code == 200:

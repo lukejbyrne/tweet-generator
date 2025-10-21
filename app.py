@@ -3,7 +3,9 @@ from huggingface_hub import InferenceClient
 import os
 
 app = Flask(__name__)
-HUGGING_FACE_API_KEY=os.getenv("HUGGING_FACE_API_KEY")
+HUGGING_FACE_API_KEY = os.getenv("HUGGING_FACE_API_KEY")
+if not HUGGING_FACE_API_KEY:
+    raise ValueError("HUGGING_FACE_API_KEY environment variable is not set")
 client = InferenceClient(api_key=HUGGING_FACE_API_KEY)
 
 @app.route('/')
@@ -36,5 +38,4 @@ def generate_tweet():
 
 if __name__ == '__main__':
     port = int(os.getenv("PORT", 8000))  # Default to 8000 if PORT is not set
-    # app.run(host="0.0.0.0", port=port, debug=True)
-    app.run(host="0.0.0.0") # Let Gunicorn handle the port
+    app.run(host="0.0.0.0", port=port, debug=True)
